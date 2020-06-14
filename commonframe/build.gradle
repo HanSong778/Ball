@@ -1,0 +1,67 @@
+//如果它是true的话 它独立跑
+if (isFrameRun.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+    apply plugin: 'com.jakewharton.butterknife'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    sourceSets {
+        main {
+            if(isFrameRun.toBoolean()){
+                manifest.srcFile 'src/main/java/appType/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/java/libraryType/AndroidManifest.xml'
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        if (isFrameRun.toBoolean()) {
+            //如果独立跑的话需要包名 将主gradle中的包名移过来
+            applicationId rootProject.ext.rootApplicationId
+        }
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.rootVersionCode
+        versionName rootProject.ext.rootVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:$androidXVsersion"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "com.android.support:design:$supportVsersion"
+    api "com.jakewharton:butterknife:$butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
+    api "com.squareup.retrofit2:converter-gson:$retrofit2"
+    api "com.squareup.retrofit2:adapter-rxjava2:$retrofit2"
+    api "io.reactivex.rxjava2:rxjava:$rxjava2"
+    api "io.reactivex.rxjava2:rxandroid:$rxjava2"
+    api "com.github.bumptech.glide:glide:$glide"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3"
+    implementation "com.squareup.okhttp3:logging-interceptor:$ok3log"
+    api project(path: ':beanlibrary')
+    api project(path: ':utils')
+}

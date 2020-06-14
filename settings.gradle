@@ -1,0 +1,2 @@
+include ':app', ':commonframe', ':beanlibrary', ':utils'
+rootProject.name='Ball'

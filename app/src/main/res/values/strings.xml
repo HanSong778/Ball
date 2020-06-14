@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">上篮</string>
+    <string name="Tongzhi">我的通知</string>
+    <string name="shoucang">收藏/历史</string>
+    <string name="xaioxi">消息</string>
+    <string name="shujv">数据</string>
+    <string name="quanzi">圈子</string>
+    <string name="bisai">比赛</string>
+    <string name="shouye">首页</string>
+</resources>
